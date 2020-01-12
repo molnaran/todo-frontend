@@ -1,0 +1,26 @@
+.Todo {
+  border: 1px solid gray;
+  padding: 10px;
+  margin: 5px;
+}
+
+.Check {
+  font-size: 5rem;
+  display: inline-block;
+  margin-right: 20%;
+  vertical-align: top;
+  text-align: right;
+  transition-duration: 0.5s;
+}
+
+.Check:hover {
+  cursor: pointer;
+  font-size: 6rem;
+}
+.TodoContent {
+  display: inline-block;
+}
+
+.Button {
+  margin: 10px;
+}
