@@ -16,7 +16,6 @@ class MainPage extends Component {
         loading: false
       });
     } catch (e) {
-      console.log(e);
       this.setState({ hasError: true, loading: false });
     }
   }

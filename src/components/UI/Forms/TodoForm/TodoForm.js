@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
-import styles from "./TodoForm.module.css";
+import styles from "../Form.module.css";
 import moment from "moment";
-import { datetimeformat } from "../../../config/constants";
+import { datetimeformat } from "../../../../config/constants";
 
 import DatePicker from "react-datepicker";
 
@@ -32,10 +32,10 @@ const TodoForm = props => {
 
   let titleValidation = {
     required: "Title is required",
-    maxLength: 80
+    maxLength: { value: 20, message: "Title too long!" }
   };
   let descriptionValidation = {
-    maxLength: 255
+    maxLength: { value: 250, message: "Description too long!" }
   };
 
   const onFormSubmit = async (todo, e) => {
@@ -47,7 +47,6 @@ const TodoForm = props => {
       description: todo.description,
       dueDate: dueDateString
     };
-    console.log(todoObject);
     props.onFormSubmit(todoObject);
     reset({
       title: "",
@@ -88,7 +87,7 @@ const TodoForm = props => {
         </div>
         <div>
           <label className={styles.Label} htmlFor="dateInput">
-            Pick a date!
+            Pick a date:
           </label>
           <DatePicker
             name="dateInput"

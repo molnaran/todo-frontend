@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import UserList from "./UserControl/UserList/UserList";
-import UserForm from "./UserControl/UserForm/UserForm";
-import Button from "../UI/Button/Button";
+import UserForm from "../UI/Forms/UserForm/UserForm";
+import Modal from "../UI/Modal/Modal";
 
 import axiosinstance from "../../axios-todo";
 
 const MainPage = props => {
   const [showCreateUser, setShowCreateUser] = useState(false);
   const [loading, setLoading] = useState(false);
-  const [hasError, setHasError] = useState(false);
+  const [error, setError] = useState(null);
   const [users, setUsers] = useState([]);
 
   const removeUserHandler = async userId => {
     try {
       setLoading(true);
-      setHasError(false);
+      setError(null);
       let result = await axiosinstance.delete("api/user/" + userId);
 
       setUsers(prevUsers =>
@@ -23,28 +23,36 @@ const MainPage = props => {
       setLoading(false);
     } catch (e) {
       setLoading(false);
-      setHasError(true);
+      setError(createErrorMessage(e));
     }
   };
 
   const addUserHandler = async user => {
     try {
       setLoading(true);
-      setHasError(false);
+      setError(null);
       let result = await axiosinstance.post("api/user/", user);
       const addedUser = result.data;
       setUsers(prevUsers => [...prevUsers, addedUser]);
       setLoading(false);
     } catch (e) {
       setLoading(false);
-      setHasError(true);
+      setError(createErrorMessage(e));
     }
+  };
+
+  const createErrorMessage = error => {
+    let errorMessage = "Something went wrong!";
+    if (error.response && error.response.data && error.response.data.message) {
+      errorMessage = error.response.data.message;
+    }
+    return errorMessage;
   };
 
   const updateUserHandler = async (userId, user) => {
     try {
       setLoading(true);
-      setHasError(false);
+      setError(false);
       let result = await axiosinstance.patch("api/user/" + userId, user);
 
       const updatedUser = result.data;
@@ -62,16 +70,21 @@ const MainPage = props => {
       setLoading(false);
     } catch (e) {
       setLoading(false);
-      setHasError(true);
+      setError(createErrorMessage(e));
     }
   };
 
   useEffect(() => {
     const fetchUsers = async () => {
       try {
+        setLoading(true);
+        setError(null);
         let result = await axiosinstance.get("api/user/");
         setUsers(prevUsers => [...prevUsers, ...result.data]);
-      } catch (e) {}
+      } catch (e) {
+        setLoading(false);
+        setError(createErrorMessage(e));
+      }
     };
     fetchUsers();
   }, []);
@@ -80,8 +93,13 @@ const MainPage = props => {
   if (loading) {
     userContent = "Loading...";
   }
-  if (hasError) {
-    userContent = "Error during api call, try restarting the server!";
+  let errorModal = null;
+  if (error) {
+    errorModal = (
+      <Modal show={error} modalClosed={() => setError(false)}>
+        <p>{error}</p>
+      </Modal>
+    );
   }
   if (users) {
     userContent = (
@@ -93,8 +111,14 @@ const MainPage = props => {
     );
   }
 
+  const handleUserAddWithModal = user => {
+    addUserHandler(user);
+    setShowCreateUser(!showCreateUser);
+  };
+
   return (
     <div>
+      {errorModal}
       <button
         onClick={() =>
           setShowCreateUser(prevShowCreateUser => !prevShowCreateUser)
@@ -104,7 +128,17 @@ const MainPage = props => {
         Show add user!
       </button>
       {userContent}
-      {showCreateUser && <UserForm onFormSubmit={addUserHandler} />}
+      {showCreateUser && (
+        <Modal
+          show={showCreateUser}
+          modalClosed={() => setShowCreateUser(!showCreateUser)}
+        >
+          <UserForm
+            onFormSubmit={handleUserAddWithModal}
+            buttonText={"Create User"}
+          />
+        </Modal>
+      )}
     </div>
   );
 };

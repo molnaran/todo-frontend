@@ -1,26 +1,37 @@
 .Todo {
   border: 1px solid gray;
-  padding: 10px;
-  margin: 5px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 80%;
+  margin-top: 10px;
+  margin-bottom: 10px;
 }
 
 .Check {
   font-size: 5rem;
   display: inline-block;
-  margin-right: 20%;
-  vertical-align: top;
-  text-align: right;
+  margin: 0%;
   transition-duration: 0.5s;
 }
 
 .Check:hover {
   cursor: pointer;
-  font-size: 6rem;
 }
 .TodoContent {
   display: inline-block;
 }
-
-.Button {
-  margin: 10px;
+.TodoContent p {
+  margin: 0;
+  max-width: 80%;
+}
+.TodoDetails {
+  display: inline-block;
+}
+.TodoActions {
+  display: inline-block;
+  width: 15%;
+}
+.TodoActions button {
+  width: 100%;
 }

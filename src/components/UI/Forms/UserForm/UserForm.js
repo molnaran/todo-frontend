@@ -1,7 +1,6 @@
 import React, { useState, useRef } from "react";
 import { useForm } from "react-hook-form";
-import axiosinstance from "axios";
-import styles from "./UserForm.module.css";
+import styles from "../Form.module.css";
 
 const UserForm = props => {
   const { handleSubmit, errors, watch, register, reset } = useForm();
@@ -55,7 +54,9 @@ const UserForm = props => {
             name="name"
             ref={register(inputValidation)}
           />
-          {errors.name && errors.name.message}
+          <div className={styles.ErrorField}>
+            {errors.name && errors.name.message}
+          </div>
         </div>
         <div className={styles.FormControl}>
           <input
@@ -65,7 +66,9 @@ const UserForm = props => {
             name="email"
             ref={register(emailValidation)}
           />
-          {errors.email && errors.email.message}
+          <div className={styles.ErrorField}>
+            {errors.email && errors.email.message}
+          </div>
         </div>
         <div className={styles.FormControl}>
           <input
@@ -74,7 +77,9 @@ const UserForm = props => {
             name="password"
             ref={register(passwordValidation)}
           />
-          {errors.password && errors.password.message}
+          <div className={styles.ErrorField}>
+            {errors.password && errors.password.message}
+          </div>
         </div>
         <div className={styles.FormControl}>
           <input
@@ -84,7 +89,9 @@ const UserForm = props => {
             ref={register(confirmPasswordValidation)}
           />
         </div>
-        {errors.confirmPassword && errors.confirmPassword.message}
+        <div className={styles.ErrorField}>
+          {errors.confirmPassword && errors.confirmPassword.message}
+        </div>
         <div className={styles.FormActions}>
           <button className={styles.Button} type="submit">
             {props.buttonText}

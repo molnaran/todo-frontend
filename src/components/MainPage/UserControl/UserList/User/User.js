@@ -1,14 +1,15 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect, useCallback, Fragment } from "react";
 
-import axiosinstance from "../../../../../axios-todo";
 import styles from "./User.module.css";
 import UserDetails from "./UserDetails/UserDetails";
 import UploadAvatar from "./UploadAvatar/UploadAvatar";
-import UserForm from "../../UserForm/UserForm";
+import UserForm from "../../../../UI/Forms/UserForm/UserForm";
+import Modal from "../../../../UI/Modal/Modal";
 import TodosContainer from "../../../../TodosContainer/TodosContainer";
 
 const User = props => {
   const [edit, setEdit] = useState(false);
+  const [showTodoList, setShowTodoList] = useState(false);
 
   const {
     id,
@@ -26,12 +27,15 @@ const User = props => {
   });
 
   let userCard = (
-    <UserDetails
-      name={name}
-      email={email}
-      handleAvatarChange={handleUserChange}
-      avatarPath={avatarPath}
-    />
+    <Fragment>
+      <UserDetails
+        name={name}
+        email={email}
+        handleAvatarChange={handleUserChange}
+        avatarPath={avatarPath}
+        id={id}
+      />
+    </Fragment>
   );
   if (edit) {
     userCard = (
@@ -45,16 +49,24 @@ const User = props => {
       />
     );
   }
+
   return (
-    <div className={styles.UserCard}>
-      {userCard}
-      <UploadAvatar userId={id} onAvatarChange={handleUserChange} />
-      <button onClick={() => props.onDelete(id)}>Delete user!</button>
-      <button onClick={() => setEdit(!edit)}>
-        {!edit ? "Edit" : "View"} user!
-      </button>
-      <TodosContainer userId={id} />
-    </div>
+    <Fragment>
+      <div className={styles.UserCard}>
+        {userCard}
+        {showTodoList ? (
+          <Modal show={showTodoList} modalClosed={() => setShowTodoList(false)}>
+            <TodosContainer userId={id} />
+          </Modal>
+        ) : null}
+        <UploadAvatar userId={id} onAvatarChange={handleUserChange} />
+        <button onClick={() => props.onDelete(id)}>Delete User</button>
+        <button onClick={() => setEdit(!edit)}>
+          {!edit ? "Edit User" : "View User"}
+        </button>
+        <button onClick={() => setShowTodoList(true)}>Show Todos</button>
+      </div>
+    </Fragment>
   );
 };
 

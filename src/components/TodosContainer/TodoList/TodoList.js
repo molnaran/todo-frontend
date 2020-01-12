@@ -1,7 +1,7 @@
-import React from "react";
+import React, { Fragment } from "react";
 import Todo from "./Todo/Todo";
-
-import TodoForm from "../TodoForm/TodoForm";
+import styles from "./Todo/Todo";
+import TodoForm from "../../UI/Forms/TodoForm/TodoForm";
 
 const TodoList = props => {
   const { userId, onUpdate, onDelete, onAdd, todos } = props;
@@ -26,11 +26,17 @@ const TodoList = props => {
     ));
   }
   return (
-    <div>
-      {" "}
-      <TodoForm onFormSubmit={addUserHandler} buttonText={"Add new todo!"} />
+    <Fragment>
+      <div className={styles.Todo}>
+        <TodoForm
+          class
+          onFormSubmit={addUserHandler}
+          buttonText={"Add new todo!"}
+        />
+      </div>
+
       {todoList}
-    </div>
+    </Fragment>
   );
 };
 

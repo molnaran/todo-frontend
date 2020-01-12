@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, Fragment } from "react";
 import styles from "./UserDetails.module.css";
 import axiosinstance from "../../../../../../axios-todo";
 
 const UserDetails = props => {
   const [avatar, setAvatar] = useState();
   const { name, email, avatarPath, handleAvatarChange } = props;
-  useEffect(() => {
-    console.log("UserDetails rendering...");
-  });
 
   useEffect(() => {
     const fetchAvatar = async () => {
@@ -30,15 +27,17 @@ const UserDetails = props => {
   }, [handleAvatarChange, avatarPath]);
 
   return (
-    <div>
-      <p>Name: {name}</p>
-      <p>Email: {email}</p>
+    <Fragment>
+      <div className={styles.Details}>
+        <p>Name: {name}</p>
+        <p>Email: {email}</p>
+      </div>
       {avatar ? (
         <img className={styles.Avatar} src={avatar} />
       ) : (
         "Avatar not available!"
       )}
-    </div>
+    </Fragment>
   );
 };
 export default UserDetails;

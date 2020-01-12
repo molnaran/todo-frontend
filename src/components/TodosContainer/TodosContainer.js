@@ -12,10 +12,7 @@ const TodoContainer = props => {
           "api/user/" + props.userId + "/todo/"
         );
         setTodos(result.data);
-        console.log(result.data);
-      } catch (e) {
-        console.log(e);
-      }
+      } catch (e) {}
     };
     fetchTodos();
   }, [props.userId]);
@@ -66,7 +63,6 @@ const TodoContainer = props => {
 
   return (
     <div>
-      <p>TodoContainer</p>
       <TodoList
         todos={todos}
         onUpdate={updateTodoHandler}

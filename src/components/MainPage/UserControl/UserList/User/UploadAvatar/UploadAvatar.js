@@ -25,9 +25,7 @@ const UploadAvatar = props => {
         }
       );
       props.onAvatarChange(result.data);
-    } catch (err) {
-      console.log(err);
-    }
+    } catch (err) {}
   };
 
   return (

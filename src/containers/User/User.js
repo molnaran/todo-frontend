@@ -28,7 +28,6 @@ class User extends Component {
 
   handleAddTodo = async todo => {
     try {
-      console.log(todo);
       this.setState({ loading: false, hasError: false });
       let result = await axiosinstance.post(
         "http://localhost:8080/api/user/" + this.props.user.id + "/todo/",

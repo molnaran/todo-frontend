@@ -1,13 +1,13 @@
-import React from "react";
+import React, { Fragment } from "react";
 
 const TodoDetails = props => {
   const { title, description, dueDate } = props;
   return (
-    <div>
+    <Fragment>
       <p>Title: {title}</p>
       <p>Description: {description}</p>
       <p>Duedate: {dueDate} </p>
-    </div>
+    </Fragment>
   );
 };
 export default TodoDetails;

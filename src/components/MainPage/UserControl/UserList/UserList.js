@@ -2,9 +2,9 @@ import React from "react";
 import User from "./User/User";
 
 const UserList = props => {
-  let userList = "No users found! Start by adding them!";
+  let userList = "No users found! Start adding them!";
 
-  if (props.users != null) {
+  if (props.users != null && props.users.length != 0) {
     userList = props.users.map(user => (
       <User
         key={user.id}

@@ -1,6 +1,6 @@
 import React, { useState, Fragment } from "react";
 
-import TodoForm from "../../TodoForm/TodoForm";
+import TodoForm from "../../../UI/Forms/TodoForm/TodoForm";
 import TodoDetails from "./TodoDetails/TodoDetails";
 import styles from "./Todo.module.css";
 
@@ -18,18 +18,16 @@ const Todo = props => {
   };
   let content = (
     <Fragment>
-      <div>
-        <div className={styles.Check} onClick={() => handleToogleTodo()}>
-          {done ? String.fromCharCode(10003) : String.fromCharCode(215)}
-        </div>
-        <div className={styles.TodoContent}>
-          <TodoDetails
-            title={title}
-            dueDate={dueDate}
-            description={description}
-            done={done}
-          />
-        </div>
+      <div className={styles.Check} onClick={() => handleToogleTodo()}>
+        {done ? String.fromCharCode(10003) : String.fromCharCode(215)}
+      </div>
+      <div className={styles.TodoContent}>
+        <TodoDetails
+          title={title}
+          dueDate={dueDate}
+          description={description}
+          done={done}
+        />
       </div>
     </Fragment>
   );
@@ -37,25 +35,24 @@ const Todo = props => {
   if (edit) {
     content = (
       <TodoForm
-        buttonText={"Edit Todo!"}
+        buttonText={"Edit!"}
         title={title}
         dueDate={dueDate}
         description={description}
         onFormSubmit={handleUpdateTodo}
+        className={styles.Todo}
       />
     );
   }
   return (
     <div className={styles.Todo}>
       {content}
-      <div>
+      <div className={styles.TodoActions}>
         {" "}
-        <button className={styles.Button} onClick={() => setEdit(!edit)}>
-          {!edit ? "Edit" : "View"} Todo
+        <button onClick={() => setEdit(!edit)}>
+          {!edit ? "Edit" : "View"}
         </button>
-        <button className={styles.Button} onClick={() => onDelete(id)}>
-          Delete Todo
-        </button>
+        <button onClick={() => onDelete(id)}>Delete</button>
       </div>
     </div>
   );
