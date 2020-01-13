@@ -10,8 +10,7 @@ import "react-datepicker/dist/react-datepicker.css";
 
 const TodoForm = props => {
   const [date, setDate] = useState(null);
-  const [loading, setLoading] = useState(null);
-  const { handleSubmit, errors, watch, register, reset, setValue } = useForm();
+  const { handleSubmit, errors, register, reset, setValue } = useForm();
 
   useEffect(() => {
     const initDate = () => {
@@ -23,7 +22,7 @@ const TodoForm = props => {
       }
     };
     initDate();
-  }, []);
+  }, [props.dueDate, register, setValue]);
 
   let intialValues = {
     title: props.title ? props.title : "",
@@ -112,9 +111,6 @@ const TodoForm = props => {
       </form>
     </div>
   );
-  if (loading) {
-    content = "Loading...";
-  }
   return <div>{content}</div>;
 };
 export default TodoForm;

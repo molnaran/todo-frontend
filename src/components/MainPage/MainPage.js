@@ -3,6 +3,7 @@ import UserList from "./UserControl/UserList/UserList";
 import UserForm from "../UI/Forms/UserForm/UserForm";
 import Modal from "../UI/Modal/Modal";
 
+import { createErrorMessage } from "../../utils/errorHandler";
 import axiosinstance from "../../axios-todo";
 
 const MainPage = props => {
@@ -39,14 +40,6 @@ const MainPage = props => {
       setLoading(false);
       setError(createErrorMessage(e));
     }
-  };
-
-  const createErrorMessage = error => {
-    let errorMessage = "Something went wrong!";
-    if (error.response && error.response.data && error.response.data.message) {
-      errorMessage = error.response.data.message;
-    }
-    return errorMessage;
   };
 
   const updateUserHandler = async (userId, user) => {

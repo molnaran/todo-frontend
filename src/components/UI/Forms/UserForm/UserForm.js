@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
+import React, { useRef } from "react";
 import { useForm } from "react-hook-form";
 import styles from "../Form.module.css";
 
 const UserForm = props => {
-  const { handleSubmit, errors, watch, register, reset } = useForm();
+  const { handleSubmit, errors, watch, register } = useForm();
 
   const password = useRef({});
   password.current = watch("password", "");

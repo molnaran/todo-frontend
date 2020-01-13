@@ -1,13 +1,16 @@
 import React, { useEffect, useState, Fragment } from "react";
 import styles from "./UserDetails.module.css";
 import axiosinstance from "../../../../../../axios-todo";
+import { createErrorMessage } from "../../../../../../utils/errorHandler";
 
 const UserDetails = props => {
   const [avatar, setAvatar] = useState();
+  const [error, setError] = useState(null);
   const { name, email, avatarPath, handleAvatarChange } = props;
 
   useEffect(() => {
     const fetchAvatar = async () => {
+      setError(null);
       try {
         let result = await axiosinstance.get("/api/avatar/" + avatarPath, {
           responseType: "arraybuffer"
@@ -20,7 +23,9 @@ const UserDetails = props => {
           )
         );
         setAvatar("data:;base64," + base64);
-      } catch (e) {}
+      } catch (e) {
+        setError(createErrorMessage(e));
+      }
     };
 
     fetchAvatar();
@@ -33,10 +38,11 @@ const UserDetails = props => {
         <p>Email: {email}</p>
       </div>
       {avatar ? (
-        <img className={styles.Avatar} src={avatar} />
+        <img className={styles.Avatar} src={avatar} alt={"user_avatar"} />
       ) : (
         "Avatar not available!"
       )}
+      <div>{error}</div>
     </Fragment>
   );
 };

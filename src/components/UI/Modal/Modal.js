@@ -9,7 +9,6 @@ const Modal = props => {
   } else {
     appliedStyles.push(styles.TranslateYOut);
   }
-  console.log(props.modalClosed);
   return (
     <Fragment>
       <Backdrop show={props.show} clicked={props.modalClosed} />

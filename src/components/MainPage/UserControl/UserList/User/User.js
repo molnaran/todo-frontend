@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback, Fragment } from "react";
+import React, { useState, Fragment } from "react";
 
 import styles from "./User.module.css";
 import UserDetails from "./UserDetails/UserDetails";
@@ -11,20 +11,12 @@ const User = props => {
   const [edit, setEdit] = useState(false);
   const [showTodoList, setShowTodoList] = useState(false);
 
-  const {
-    id,
-    name,
-    email,
-    password,
-    confirmPassword,
-    avatarPath,
-    onUpdate
-  } = props.user;
+  const { id, name, email, password, confirmPassword, avatarPath } = props.user;
 
-  const handleUserChange = useCallback(user => {
+  const handleUserChange = user => {
     props.onUpdate(props.user.id, user);
     setEdit(false);
-  });
+  };
 
   let userCard = (
     <Fragment>
